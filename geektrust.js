@@ -1,5 +1,4 @@
-const fs = require("fs")
-
+const fs = require("fs");
 
 /**
  * Root of the project.
@@ -12,9 +11,11 @@ const executeInputFile = (filename) => {
     const inputCommands = inputContent.toString().split("\n");
 
     const commandIndex = 0;
-    const idIndex = 1;
+    const indexOne = 1;
+    const indexTwo = 2;
+    const indexThree = 3;
 
-    const defaultCommands = {
+    const commandTypes = {
         ADD_DRIVER: 'ADD_DRIVER',
         ADD_RIDER: 'ADD_RIDER',
         MATCH: 'MATCH',
@@ -24,28 +25,34 @@ const executeInputFile = (filename) => {
     };
 
     for (let eachCommand of inputCommands) {
-        const commandsArray = eachCommand.split(' ').map((line) => line.trim());
+        const commandsArray = eachCommand.split(/\s+/).map((line) => line.trim());
         const command = commandsArray[commandIndex];
-        const id = commandsArray[idIndex];
+        const id = commandsArray[indexOne];
 
         switch (command) {
-            case defaultCommands.ADD_DRIVER:
+            case commandTypes.ADD_DRIVER:
+                const driverPositionX = parseFloat(commandsArray[indexTwo]);
+                const driverPositionY = parseFloat(commandsArray[indexThree]);
+                console.log(driverPositionX, driverPositionY);
+                break;
+            case commandTypes.ADD_RIDER:
+                const riderPositionX = parseFloat(commandsArray[indexTwo]);
+                const riderPositionY = parseFloat(commandsArray[indexThree]);
+                console.log(riderPositionX, riderPositionY);
+                break;
+            case commandTypes.MATCH:
                 console.log(id);
                 break;
-            case defaultCommands.ADD_RIDER:
+            case commandTypes.START_RIDE:
+                const driverN = parseInt(commandsArray[indexTwo]);
+                const riderId = commandsArray[indexThree];
+                console.log(driverN, riderId);
+                break;
+            case commandTypes.BILL:
                 console.log(id);
-                break
-            case defaultCommands.MATCH:
-                console.log(id);
-                break
-            case defaultCommands.START_RIDE:
-                console.log(id);
-                break
-            case defaultCommands.BILL:
-                console.log(id);
-                break
+                break;
             default:
-                console.log('default', command, id)
+                console.log('default', command, id);
                 break;
         }
     }
